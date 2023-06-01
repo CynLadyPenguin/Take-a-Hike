@@ -17,41 +17,46 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true
 },
   async (req, accessToken, refreshToken, profile, done) => {
-  // console.log(20, "profile\n", profile)
   const defaultUser = {
     fullName: `${profile.name.givenName} ${profile.name.familyName}`,
     email: profile.emails[0].value,
     picture: profile.photos[0].value,
     googleId: profile.id,
   }
+  try {
+    const [user, created] = await Users.findOrCreate({ where: { googleId: profile.id }, defaults: defaultUser })
 
-  const user = await Users.findOrCreate({ where: { googleId: profile.id }, defaults: defaultUser})
-    .then(() => console.log('User added to database'))
-    .catch((err) => {
-      console.log("Error logging on", err)
-      done(err, null)
-  });
+    // console.log(user.dataValues)
+    const userData = user.dataValues;
 
-  if(user && user[0]){
-    return done(null, user && user[0])
+    return done(null, userData);
+
+
+  } catch (error) {
+    console.error('Error during Google authentication:', error);
+    return done(error);
   }
-}
-));
 
-passport.serializeUser((user, done) => {
-  // console.log("Serializing User:", user)
-  done(null, user._id);
+}
+)); // This returned user will be passed to serializeUser by passport's Strategy framework
+
+// Gets the user from the req object, all done by passport you can sit back and relax (req.session.passport.user)
+passport.serializeUser((user, cb) => {
+  console.log("Serializing User:", user)
+  return cb(null, user);
 });
 
-passport.deserializeUser(async(id, done) => {
-  
-  const user = await Users.findOne({ where: { id } }).catch((err) => {
-    console.log("error deserializing", err);
+// Attaches the user object to req.user because it's authenticating the user, should be able to call req.user for the returned obj now
+passport.deserializeUser((req, user, done) => {
 
-    if(user){
-      done(null, user);
-    }
-  })
-  done(null, user);
+  Users.findOne({ where: { _id: user._id } })
+    .then((user) => {
+      // console.log('Deserialized User:', user.dataValues);
+      return done(null, user.dataValues);
+    })
+    .catch((error) => {
+      // console.error('Error deserializing user:', error);
+      return done(error);
+    });
 });
 

@@ -33,6 +33,7 @@
     "bulma": "^0.9.3",
     "cloudinary": "^1.29.0",
     "cloudinary-react": "^1.7.2",
+    "connect-session-sequelize": "^7.1.7",
     "cookie-session": "^2.0.0",
     "csv-parse": "^5.0.4",
     "csv-parser": "^3.0.0",

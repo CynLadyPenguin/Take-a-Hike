@@ -268,3 +268,8 @@ body {
   right: 0;
   bottom: 0;
 }
+
+.black-button {
+  background-color: black;
+  color: white;
+}

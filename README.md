@@ -52,6 +52,7 @@ A searchable checklist of all the bird in Louisiana (according to eBird a Cornel
 15. Ebird - Bird data API
 16. TrailApi - hiking trail data
 17. MaterialUI - styling
+18. Connect-session-sequelize - Session Storage
 
 ### database:
 
@@ -99,9 +100,14 @@ Dev Setup:
 
 (for hiking trail data) 8. X-RapidApi Key= 9. X-RapidAPI-Host=
 
+10. (for session secret key) SESSION_ID_COOKIE=
+
 ## Google OAuth
 
 Google Oauth requires a google cloud account. First create your account and then navigate to the developer console. Go to google API and create a clientID and clientSecret. This goes inside the .env file.
+
+## Session ID Cookie
+It can be any string of your choice; it's for security purposes.
 
 ## Installation/Start-up
 
