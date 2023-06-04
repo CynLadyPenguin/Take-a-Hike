@@ -4,6 +4,8 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 const srcDir = path.resolve(__dirname, "client");
 const distDir = path.resolve(__dirname, "dist");
 
+const Dotenv = require('dotenv-webpack');
+
 
 
 module.exports = {
@@ -47,7 +49,8 @@ module.exports = {
       template: path.resolve(srcDir, "index.html"),
       inject: "body",
     }),
-    new NodePolyfillPlugin()
+    new NodePolyfillPlugin(),
+    new Dotenv(),
   ],
   resolve: {
     fallback: {

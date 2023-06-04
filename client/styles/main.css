@@ -216,6 +216,11 @@ body {
   margin-bottom: 45px;
 }
 
+.map-container {
+  height: 400px;
+}
+
+
 .post__image {
   /* width: 100%; */
   object-fit: contain;

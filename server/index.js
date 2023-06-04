@@ -60,7 +60,7 @@ app.use(passport.initialize()); //passport is used on every call
 app.use(passport.session());  //passport uses express-session
 
 
-const successLoginUrl = 'http://localhost:5555/#/trailslist';
+const successLoginUrl = 'http://localhost:5555/#/profile';
 const errorLoginUrl = 'http://localhost:5555/login/error';
 
 //Auth Routes
@@ -74,11 +74,10 @@ app.get(
   passport.authenticate('google', {
     failureMessage: 'cannot login to Google',
     failureRedirect: errorLoginUrl,
-    successRedirect: successLoginUrl,
+    successRedirect: successLoginUrl
   }),
   (req, res) => {
-    console.log('User: ', req.user);
-    res.send('thank you for signing in!');
+    res.send("Hello, you.");
   }
 );
 
@@ -119,6 +118,19 @@ app.get("/profile",(req, res) => {
       res.sendStatus(500);
     });
 });
+
+// Getting the user object on the request and sending it to the client side
+app.get('/user', async (req, res) => {
+  try {
+    const user = req.user;
+    if(user) {
+      res.status(200).send(user);
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 
 ////////////////////////////////////////EXTERNAL TRAIL API ROUTE/////////////////////////////////////////
 

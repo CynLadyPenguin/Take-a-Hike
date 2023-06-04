@@ -1,11 +1,13 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
+import { useParams } from 'react-router-dom';
 
-const UserProfile = () => {
+const UserProfile = ({ setUserId }) => {
   const [profileName, setProfileName] = useState("");
   const [picture, setPicture] = useState("");
   const [email, setEmail] = useState("");
+
 
   useEffect(() => {
     axios.get("/profile").then((profile) => {
@@ -15,7 +17,7 @@ const UserProfile = () => {
       setPicture(user.picture);
       setEmail(user.email);
     });
-  });
+  }, []);
 
 
   return (
