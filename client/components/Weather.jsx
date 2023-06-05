@@ -196,7 +196,7 @@ const windDirectionFunction = (directionNumber) => {
 
 useEffect(() => {
   fetch14Weather(currentLocation);
-  console.log(holderObjWC);
+  // console.log(holderObjWC);
 }, [currentLocation]);
 
   return(
