@@ -278,3 +278,30 @@ body {
   background-color: black;
   color: white;
 }
+
+.bird-learner {
+  font-weight: 300;
+  font-size: 2em;
+  line-height: 1.2em;
+  font-family: 'Oswald', Arial, sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.bird-learner-container {
+  margin-bottom: 20px; 
+}
+
+.bird-button {
+  color: black;
+  background-color: transparent;
+  border: 2px solid black;
+  padding: 10px;
+  font-size: 16px;
+  margin-Right: 20px;
+  width: 200px;
+  font-weight: 300;
+  font-family: 'Oswald', Arial, sans-serif;
+}
+
+

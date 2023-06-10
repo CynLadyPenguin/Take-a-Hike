@@ -7,6 +7,7 @@ const db = new Sequelize("TakeAHike", "root", "", {
   host: "localhost", // The `host` parameter is required for other databases
   dialect: "mysql",
   logging: false, // Avoids printing all of the syncing messages in the server console (there's a lot)
+  
 });
 
 // Use Sequelize Authenticate Method

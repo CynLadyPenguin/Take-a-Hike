@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TrailsListEntry from "./TrailsListEntry.jsx";
+// import FavoriteTrail from './FavoriteTrail.jsx';
 
 const TrailsList = ({ handleGetTrails, trailList }) => {
   const [location, setLocation] = useState({ lat: "", lon: "" });
@@ -56,6 +57,7 @@ const TrailsList = ({ handleGetTrails, trailList }) => {
           className="button is-info is-rounded"
         />
       </form>
+      {/* <FavoriteTrail /> */}
       <div className="trails">
         <div className="trail-table">
           {trailList.map((trail) => {

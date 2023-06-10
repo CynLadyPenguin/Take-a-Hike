@@ -109,6 +109,8 @@ Dev Setup:
 
 11 (for mapBox rendering) MAPBOX_API_KEY=
 
+12. (for openai ghost stories) OPENAI_API_KEY=
+
 ## Google OAuth
 
 Google Oauth requires a google cloud account. First create your account and then navigate to the developer console. Go to google API and create a clientID and clientSecret. This goes inside the .env file.

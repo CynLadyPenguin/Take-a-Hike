@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import 'regenerator-runtime/runtime';
 import { Image } from 'cloudinary-react';
 import axios from 'axios';
-import { Fab } from '@mui/material';
+import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 import PhotoPost from './PhotoPost.jsx';

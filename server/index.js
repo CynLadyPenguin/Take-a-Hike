@@ -11,13 +11,17 @@ const { BirdList } = require("./database/models/birdList.js")
 const { BirdSightings } = require("./database/models/birdSightings.js")
 const { PackingLists } = require("./database/models/packingLists");
 const { PackingListItems } = require("./database/models/packingListItems");
+const storyRouter = require("./database/routes/storyRouter.js");
 
+const { learnedBirdsRouter } = require('./database/routes/learnedBirdsRouter.js');
+
+// const { default: PackingList } = require("../client/components/PackingList");
 const router = express.Router();
 const session = require('express-session');
 require('./middleware/auth.js');
 const { cloudinary } = require('./utils/coudinary');
 const { Users } = require('./database/models/users');
-
+const { Trails } = require('./database/models/trails.js');
 // // Import session storage
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -60,6 +64,10 @@ app.use(passport.initialize()); //passport is used on every call
 app.use(passport.session());  //passport uses express-session
 
 
+
+app.use('/api/learnedBirds', learnedBirdsRouter);
+
+
 const successLoginUrl = 'http://localhost:5555/#/profile';
 const errorLoginUrl = 'http://localhost:5555/login/error';
 
@@ -86,8 +94,10 @@ app.post('/logout', function(req, res) {
   res.redirect('/#/login');
 });
 
+//grab all the users
+app.get('/api/users', )
 
-// // Middleware to check if user is logged in on every request
+// Middleware to check if user is logged in on every request
 const isAuthenticated = (req, res, next) => {
   if(req.user) {
     console.log('User authenticated', req.user)
@@ -142,8 +152,7 @@ app.get("/api/trailslist", (req, res) => {
       {
         headers: {
           "X-RapidAPI-Host": "trailapi-trailapi.p.rapidapi.com",
-          "X-RapidAPI-Key":
-            "a27adeb778msh22d13ed248d5359p1d95b8jsnb7239b396c5c",
+          "X-RapidAPI-Key": process.env.X-RapidApi-Key,
         },
       }
     )
@@ -156,6 +165,60 @@ app.get("/api/trailslist", (req, res) => {
       res.sendStatus(404);
     });
 });
+
+app.get("/api/trailnames", (req, res) => {
+  Trails.findAll({})
+  .then(names => {
+    res.json(names);
+  })
+  .catch(err => {
+    console.error("ERROR: ", err);
+    res.status(404).send('Error fetching trails');
+  });
+});
+
+// //establish database endpoint for favoriteTrail
+// app.put('/api/users/updateFavoriteTrail', async (req, res) => {
+//   const { userId, favoriteTrail } = req.body;
+//   try {
+//     const user = await Users.findOne({
+//       where: {
+//         _id: userId,
+//       }
+//     });
+//     if (!user) {
+//       return res.status(404).send('User not found');
+//     }
+
+//     user.favoriteTrail = favoriteTrail;
+//     await user.save();
+
+//     res.status(200).send('Favorite trail updated successfully');
+//   } catch (err) {
+//     res.status(500).send('Server error');
+//   }
+// });
+
+// //endpoint for user
+// app.get('/api/users/:userId', async (req, res) => {
+//   const { userId } = req.params;
+
+//   try {
+//     const user = await Users.findOne({
+//       where: {
+//         _id: userId,
+//       }
+//     });
+//     if (!user) {
+//       return res.status(404).send('User not found');
+//     }
+
+//     res.status(200).send(user);
+//   } catch (err) {
+//     res.status(500).send('Server error');
+//   }
+// });
+
 
 //////////////////////////////////////// Cloudinary routes //////////////////////////////////////
 
@@ -253,6 +316,7 @@ app.get("/api/birdList/", (req, res) => {
     });
 });
 
+
 //GET req for all select birdList data
 app.get('/api/birdList/birdSearch', (req, res) => {
   BirdList.findAll({
@@ -321,6 +385,21 @@ app.delete('/api/birdsightings', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+// Getting the user object on the request and sending it to the client side
+app.get('/user', async (req, res) => {
+  try {
+    const user = req.user;
+    if(user) {
+      res.status(200).send(user);
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+// LEGACY ROUTES
+app.use('/api/stories', storyRouter);
 
 // launches the server from localhost on port 5555
 app.listen(PORT, () => {
