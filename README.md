@@ -33,6 +33,21 @@ Packing List
 Birding Check List
 A searchable checklist of all the bird in Louisiana (according to eBird a Cornell run Bird Data API). This includes the bird's common name, scientific name, common family name, and common scientific name. Users can check any bird they have spotted along there journey to keep along the trail.
 
+Bird Learner 
+is located inside of and at the top of the Birding Check List. It displays 3 random bird choices from the list and plays the audio of 1 of them. The user guesses which bird's song is playing. Once the correct bird is guessed, it is added to the learnedBirds table, and noted in the Biring Check List for that bird.
+
+Ghost Stories
+A feature that allows users to type in a prompt and receive a ghost story, courtesy of DaVinci 3, that they can then customize, save, and make their own.
+
+Weather
+The weather component is designed to help users plan their hikes around the weather. All of the trails from the database are loaded into the drop down list and when the user selects a trail, the weather data is loaded from the Open Meteo API. The data from Open Meteo is open-source and allows users to access unlimited amounts of weather data. The weather is displayed in two forms: the Daily display, which shows the temperature (in celcius), wind speed, wind direction, and weather code. The weather code meaning is displayed at the bottom of the weather component in a small box so the user can understand what the weather code means. Then the Extended forecast display, which shows the date, temperature, and weather for the next 14 days. If no data is available, a message 'Loading forecast data...' is displayed.
+
+Trading Post
+Are you tired of purchasing gear online, only to realize that it doesn't fit? Well, at the Trading Post, you can browse a selection of used gear being sold by other users. The website includes a maps feature that calculates the distance between the location of the post and your current location (if you choose to enable your browser's location settings).
+
+If you're a logged-in user, you can post a new trade that showcases your highly sought-after used gear by utilizing the cloudinary widget, which allows you to add a photo to your post. Don't forget to include the desired meetup location for the trade. The search bar has an automatic address lookup function, so simply start typing your address, and it will provide suggestions. Convenience at its finest, don't you think?
+
+
 ## Tech
 
 1. Cloudinary - Image hosting library
@@ -60,7 +75,7 @@ We have a mySQL/Sequelize database. We have all of our models located in databas
 
 ### server:
 
-We have an express server. It is set up in server/index.js. All routes, with the exception of the birdSighting and BirdList routes, are stored in server/index.js. The bird routes are stored in server/routes.
+We have an express server. It is set up in server/index.js. All routes, with the exception of the birdSighting, BirdList routes and BirdLearner are stored in server/index.js. The bird routes are stored in server/routes.
 
 ### authentication
 
@@ -81,6 +96,12 @@ We used 4 external apis for this project:
 
 4. MapBox API - https://docs.mapbox.com/help/getting-started/access-tokens/
    This api allows users to use the various maps in the trading section. It has a large free limit for map requests so don't worry too much about this.
+
+5. Xeno-Canto API - https://xeno-canto.org/explore/api
+   This is the API to grab the bird sounds. 1 request/second limit.
+
+6. Open-AI API - https://openai.com/blog/openai-api
+   This api allows users to use the ai model which renders the ghost stories. It has a large, free limit of 150,000 tokens.
 
 ### front-end
 
